@@ -15,6 +15,9 @@
 // グローバルに展開
 phina.globalize();
 
+var SCREEN_WIDTH = 640;
+var SCREEN_HEIGHT = 960;
+
 // MainScene クラスを定義
 phina.define('MainScene', {
   superClass: 'DisplayScene',
@@ -22,13 +25,89 @@ phina.define('MainScene', {
     this.superInit();
     // 背景色を指定
     this.backgroundColor = '#444';
+    // タッチでキャラクターを生成
+    this.onpointstart = function(e) {
+      this.player = PLAYER().addChildTo(this);
+      this.player.setPosition(300,900);
+    };
+    // 敵を生成
+    this.enemy = ENEMY().addChildTo(this);
+    this.enemy.setPosition(350,800);
+    this.enemy2 = ENEMY2().addChildTo(this);
+    this.enemy2.setPosition(250,700);
     // ラベルを生成
-    this.label = Label('Hello, phina.js!').addChildTo(this);
-    this.label.x = this.gridX.center(); // x 座標
-    this.label.y = this.gridY.center(); // y 座標
+    this.label = Label('fantasyClicker').addChildTo(this);
+    this.label.x = 150; // x 座標
+    this.label.y = 50; // y 座標
     this.label.fill = 'white'; // 塗りつぶし色
   },
+  update: function(app) {
+    if (PLAYER.hitTestElement(ENEMY)) {
+          ENEMY.remove();
+        }
+  }
 });
+
+/*
+  PLAYER
+*/
+phina.define("PLAYER", {
+  superClass: 'StarShape',
+  
+  init: function() {
+    this.superInit('PLAYER');
+    //this.alpha = 0.6;
+    this.tweener.moveBy(-100,0,1000)
+                .moveBy(0,-100,1000)
+                .moveBy(200,0,2000)
+                .moveBy(0,-100,1000)
+                .moveBy(-200,0,2000)
+                .moveBy(0,-100,1000)
+                .moveBy(200,0,2000)
+                .moveBy(0,-100,1000)
+                .moveBy(-200,0,2000)
+                .moveBy(0,-100,1000)
+                .play();
+  },
+
+  update: function(app) {
+    
+  },
+});
+
+/*
+  ENEMY
+*/
+phina.define("ENEMY", {
+  superClass: 'RectangleShape',
+  
+  init: function() {
+    this.superInit('ENEMY');
+    //this.alpha = 0.6;
+  },
+
+  update: function(app) {
+    
+  },
+});
+
+/*
+  ENEMY2
+*/
+phina.define("ENEMY2", {
+  superClass: 'RectangleShape',
+  
+  init: function() {
+    this.superInit('ENEMY2');
+    this.fill = 'red';
+    //this.alpha = 0.6;
+  },
+
+  update: function(app) {
+    
+  },
+});
+
 /*
  * メイン処理
  */
