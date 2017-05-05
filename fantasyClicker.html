@@ -1,0 +1,45 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <title>Particle | phina.js</title>
+  </head>
+  <body>
+  </body>
+</html>
+
+
+<script src='http://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
+<script>
+// グローバルに展開
+phina.globalize();
+
+// MainScene クラスを定義
+phina.define('MainScene', {
+  superClass: 'DisplayScene',
+  init: function() {
+    this.superInit();
+    // 背景色を指定
+    this.backgroundColor = '#444';
+    // ラベルを生成
+    this.label = Label('Hello, phina.js!').addChildTo(this);
+    this.label.x = this.gridX.center(); // x 座標
+    this.label.y = this.gridY.center(); // y 座標
+    this.label.fill = 'white'; // 塗りつぶし色
+  },
+});
+/*
+ * メイン処理
+ */
+phina.main(function() {
+  // アプリケーションを生成
+  var app = GameApp({
+    startLabel: 'main', // MainScene から開始
+  });
+
+  // 実行
+  app.run();
+});
+
+</script>
